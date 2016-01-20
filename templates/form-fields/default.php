@@ -19,6 +19,7 @@ $is_required    = isset( $field[ 'required' ] ) ? $field[ 'required' ] : false;
 $value          = isset( $field[ 'value' ] ) ? $field[ 'value' ] : '';
 $placeholder    = isset( $field[ 'placeholder' ] ) ? esc_attr( $field[ 'placeholder' ] ) : '';
 $pattern        = isset( $field[ 'pattern' ] ) ? 'pattern="' . esc_attr( $field[ 'pattern' ] ) . '"' : ' ';
+$attrs          = isset( $field[ 'attrs' ] ) ? $field[ 'attrs' ] : array() ;
 ?>
 <div id="charitable_field_<?php echo $field['key'] ?>" class="<?php echo $classes ?>">
     <?php if ( isset( $field['label'] ) ) : ?>
@@ -29,5 +30,5 @@ $pattern        = isset( $field[ 'pattern' ] ) ? 'pattern="' . esc_attr( $field[
             <?php endif ?>
         </label>
     <?php endif ?>
-    <input type="<?php echo esc_attr( $field_type ) ?>" name="<?php echo $field[ 'key' ] ?>" value="<?php echo esc_attr( stripslashes( $value ) ) ?>" placeholder="<?php echo $placeholder ?>" <?php echo $pattern ?> />
+    <input type="<?php echo esc_attr( $field_type ) ?>" name="<?php echo $field[ 'key' ] ?>" value="<?php echo esc_attr( stripslashes( $value ) ) ?>" placeholder="<?php echo $placeholder ?>" <?php echo $pattern ?> <?php foreach ( $attrs as $key => $value ) { echo $key . '="' . esc_attr( $value ) . '"'; } ?> />
 </div>
