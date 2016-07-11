@@ -529,7 +529,8 @@ if ( ! class_exists( 'Charitable_Donation_Processor' ) ) :
 		 * @since   1.0.0
 		 */
 		public function update_donation_log( $donation_id, $message ) {
-			if ( $donation = charitable_get_donation( $donation_id ) ) {
+			$donation = charitable_get_donation( $donation_id );
+			if ( $donation ) {
 				$donation->update_donation_log( $message );
 			}
 		}
