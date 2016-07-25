@@ -557,7 +557,7 @@ if ( ! class_exists( 'Charitable_Campaign_Donations_DB' ) ) :
 			$parameters = array();
 			$sql_order = $this->get_orderby_clause( $args, 'ORDER BY p.post_date ASC' );
 			$sql_where = '';
-			$sql_where_clauses = array();
+			$sql_where_clauses = array( "pm.meta_key = 'donation_gateway'" );
 
 			if ( isset( $args['campaign_id'] ) ) {
 				list( $campaigns_in, $campaigns_parameters ) = $this->get_in_clause_params( $args['campaign_id'] );
@@ -585,12 +585,14 @@ if ( ! class_exists( 'Charitable_Campaign_Donations_DB' ) ) :
 			}
 
 			/* This is our base SQL query */
-			$sql = "SELECT cd.donation_id, cd.campaign_id, cd.campaign_name, cd.amount, d.email, d.first_name, d.last_name, p.post_date, p.post_content, p.post_status
+			$sql = "SELECT cd.donation_id, cd.campaign_id, cd.campaign_name, cd.amount, d.email, d.first_name, d.last_name, p.post_date, p.post_content, p.post_status, pm.meta_value as donation_gateway
                     FROM $this->table_name cd
                     INNER JOIN {$wpdb->prefix}charitable_donors d
                     ON d.donor_id = cd.donor_id
                     INNER JOIN $wpdb->posts p
                     ON p.ID = cd.donation_id
+                    INNER JOIN $wpdb->postmeta pm
+                    ON p.ID = pm.post_id
                     $sql_where
                     $sql_order";
 
